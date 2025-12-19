@@ -10,10 +10,10 @@ import SwiftUI
 
 @Observable
 final class RickAndMortyListViewViewModel {
-    let repository: CharacterRepository
+    let repository: CharacterRepositoryProtocol
     var characters: [CharacterModel] = []
 
-    init(repository: CharacterRepository) {
+    init(repository: CharacterRepositoryProtocol) {
         self.repository = repository
     }
     

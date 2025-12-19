@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class CharacterModel: Identifiable {
+final class CharacterModel: Sendable, Identifiable {
     public struct Origin: Codable {
         let name: String
         let url: String

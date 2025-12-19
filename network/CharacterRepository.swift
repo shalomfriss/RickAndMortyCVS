@@ -7,7 +7,19 @@
 
 import Foundation
 
-final class CharacterRepository {
+protocol BackgroundActorProtocol: Actor {}
+
+@globalActor
+actor BackgroundActor: BackgroundActorProtocol {
+    static let shared = BackgroundActor()
+}
+
+protocol CharacterRepositoryProtocol {
+    func searchCharacters(name: String) async throws -> [CharacterModel]
+}
+
+@BackgroundActor
+final class CharacterRepository: CharacterRepositoryProtocol {
     var characters: [CharacterModel] = []
     func searchCharacters(name: String) async throws -> [CharacterModel] {
         let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? name
@@ -23,7 +35,7 @@ final class CharacterRepository {
 
             var characters = [CharacterModel]()
             for character in response.results {
-                let characterModel = CharacterModel(name: character.name,
+                let characterModel = await CharacterModel(name: character.name,
                                                     image: character.image,
                                                     species: character.species,
                                                     status: character.status,
