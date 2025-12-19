@@ -43,6 +43,9 @@ struct RickAndMortyListView: View {
                     }
                 }
             }
+            .accessibilityIdentifier("searchableList")
+            .accessibilityLabel("Search")
+            .accessibilityHint("Search for a Rick or Morty character")
             .navigationTitle("Rick and Morty")
             .searchable(text: $searchText,
                         placement: .navigationBarDrawer(displayMode: .always),
@@ -63,6 +66,7 @@ struct RickAndMortyListView: View {
                 viewModel.characters = characters
             }
         }
+        
     }
 
     private func deleteAllCharactersFromSwiftData() {

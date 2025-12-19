@@ -16,6 +16,9 @@ struct RickAndMortyDetailView: View {
                 VStack {
                     Text(character.name)
                         .font(.title3)
+                        .accessibilityIdentifier("characterName")
+                        .accessibilityLabel("character name")
+                        .accessibilityHint("The name of the character")
                     KFImage(URL(string: character.image)!)
                         .placeholder {
                             ProgressView() // Show a progress indicator while loading
