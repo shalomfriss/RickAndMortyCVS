@@ -13,7 +13,7 @@ struct RickAndMortyDetailView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                VStack {
+                VStack(spacing: 10) {
                     Text(character.name)
                         .font(.title3)
                         .accessibilityIdentifier("characterName")
@@ -30,6 +30,9 @@ struct RickAndMortyDetailView: View {
                         Text(type)
                     }
                     Text(character.createdDate)
+                    ShareLink(item: URL(string: character.image)!,  message: Text("Name: \(character.name) species: \(character.species) origin: \(character.origin.name) type: \(String(describing: character.type ?? "none")) created: \(character.createdDate)")) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                 }
                 .frame(width: geometry.size.width)
             }
