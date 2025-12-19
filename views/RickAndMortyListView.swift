@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import Kingfisher
+import OSLog
 
 struct RickAndMortyListView: View {
     @Environment(\.modelContext) private var modelContext
@@ -15,6 +16,7 @@ struct RickAndMortyListView: View {
     @State private var viewModel = RickAndMortyListViewViewModel(repository: CharacterRepository())
     @State private var searchText: String = ""
     @State private var isLoading: Bool = false
+
     var body: some View {
         NavigationStack {
             if isLoading {
@@ -73,7 +75,7 @@ struct RickAndMortyListView: View {
         do {
             try modelContext.delete(model: CharacterModel.self)
         } catch {
-            print(error)
+            Logger.swiftData.error("Could not delete all characters")
         }
     }
 
@@ -85,7 +87,7 @@ struct RickAndMortyListView: View {
         do {
             try modelContext.save()
         } catch {
-            print("Failed to save context: \(error.localizedDescription)")
+            Logger.swiftData.error("Failed to save context: \(error.localizedDescription)")
         }
     }
 }

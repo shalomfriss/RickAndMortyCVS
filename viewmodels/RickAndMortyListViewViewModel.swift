@@ -18,10 +18,6 @@ final class RickAndMortyListViewViewModel {
     }
     
     public func search(_ query: String) async throws {
-        do {
-            characters = try await repository.searchCharacters(name: query)
-        } catch {
-            print(error)
-        }
+        characters = try await repository.searchCharacters(name: query)
     }
 }
