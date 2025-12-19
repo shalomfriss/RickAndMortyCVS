@@ -1,0 +1,16 @@
+//
+//  NOTES.txt
+//  RickAndMorty
+//
+//  Created by Friss, Shay (206845153) on 12/18/25.
+//
+
+
+Chose Kingfisher over AsyncImage because of AsyncImage limitations.
+This is a small choice that will future proof the app more in the case
+that more granular control is needed.
+I chose Kingfisher over others because it is the most battle tested.
+We can always optimize later, but it's good to have the best in class out of the gate.
+https://medium.com/@alex_persian/the-case-against-asyncimage-22a073044746
+
+
