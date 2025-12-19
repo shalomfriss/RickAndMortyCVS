@@ -27,6 +27,8 @@ enum NetworkError: Error {
 
 @BackgroundActor
 final class CharacterRepository: CharacterRepositoryProtocol {
+    var urlSession: URLSession = .shared
+
     func searchCharacters(name: String) async throws -> [CharacterModel] {
         let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? name
         let urlString = "https://rickandmortyapi.com/api/character/?name=\(encodedName)"
@@ -35,7 +37,7 @@ final class CharacterRepository: CharacterRepositoryProtocol {
             throw NetworkError.invalidURL
         }
 
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await urlSession.data(from: url)
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
