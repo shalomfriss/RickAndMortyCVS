@@ -13,9 +13,9 @@ struct RickAndMortyListView: View {
     @Query private var characters: [CharacterModel]
     @State private var viewModel = RickAndMortyListViewViewModel(repository: CharacterRepository())
     @State private var searchText: String = ""
-
+    
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             List {
                 ForEach($viewModel.characters) { character in
                     NavigationLink {
@@ -37,8 +37,6 @@ struct RickAndMortyListView: View {
                     saveCharactersToSwiftData()
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
         .onAppear {
             Task {
