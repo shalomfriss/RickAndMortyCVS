@@ -20,15 +20,4 @@ struct CharacterDTO: Codable, Identifiable {
         let name: String
         let url: String
     }
-
-//    var formattedCreatedDate: String {
-//        let isoFormatter = ISO8601DateFormatter()
-//        if let date = isoFormatter.date(from: created) {
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateStyle = .long
-//            dateFormatter.timeStyle = .none
-//            return dateFormatter.string(from: date)
-//        }
-//        return created
-//    }
 }

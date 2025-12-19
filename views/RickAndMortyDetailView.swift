@@ -15,6 +15,7 @@ struct RickAndMortyDetailView: View {
             ScrollView {
                 VStack {
                     Text(character.name)
+                        .font(.title3)
                     KFImage(URL(string: character.image)!)
                     Text(character.species)
                     Text(character.status)
@@ -26,7 +27,6 @@ struct RickAndMortyDetailView: View {
                 }
                 .frame(width: geometry.size.width)
             }
-
         }
     }
 }

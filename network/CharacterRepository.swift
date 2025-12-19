@@ -29,7 +29,7 @@ final class CharacterRepository {
                                                     status: character.status,
                                                     origin: CharacterModel.Origin(name: character.origin.name, url: character.origin.url),
                                                     type: character.type,
-                                                    createdDate: character.created)
+                                                    createdDate: isoToReadableDate(character.created))
                 characters.append(characterModel)
             }
             return characters
@@ -38,4 +38,22 @@ final class CharacterRepository {
             return [CharacterModel]()
         }
     }
+
+    private func isoToReadableDate(_ isoString: String) -> String {
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        guard let date = isoFormatter.date(from: isoString) else {
+            return ""
+        }
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateStyle = .medium
+        outputFormatter.timeStyle = .short
+        outputFormatter.locale = Locale.current
+        outputFormatter.timeZone = TimeZone.current
+
+        return outputFormatter.string(from: date)
+    }
+
 }

@@ -22,6 +22,7 @@ struct RickAndMortyListView: View {
                         RickAndMortyDetailView(character: character.wrappedValue)
                     } label: {
                         Text(character.name.wrappedValue)
+                            .font(.body)
                     }
                 }
             }
