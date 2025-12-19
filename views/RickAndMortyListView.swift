@@ -7,32 +7,52 @@
 
 import SwiftUI
 import SwiftData
+import Kingfisher
 
 struct RickAndMortyListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var characters: [CharacterModel]
     @State private var viewModel = RickAndMortyListViewViewModel(repository: CharacterRepository())
     @State private var searchText: String = ""
-    
+    @State private var isLoading: Bool = false
     var body: some View {
         NavigationStack {
+            if isLoading {
+                ProgressView("Downloading...") // Optionally add a label
+                            .progressViewStyle(CircularProgressViewStyle())
+            }
             List {
                 ForEach($viewModel.characters) { character in
                     NavigationLink {
                         RickAndMortyDetailView(character: character.wrappedValue)
                     } label: {
-                        Text(character.name.wrappedValue)
-                            .font(.body)
+                        LazyHStack {
+                            KFImage(URL(string: character.image.wrappedValue)!)
+                                .placeholder {
+                                    ProgressView() // Show a progress indicator while loading
+                                }
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 50, height: 50)
+                                .border(Color.black, width: 1)
+
+                            Text(character.name.wrappedValue)
+                                .font(.body)
+                        }
+
                     }
                 }
             }
+            .navigationTitle("Rick and Morty")
             .searchable(text: $searchText,
                         placement: .navigationBarDrawer(displayMode: .always),
                         prompt: "Rick")
             .onChange(of: searchText) { oldValue, newValue in
                 if searchText.isEmpty { return }
                 Task {
+                    isLoading = true
                     try await viewModel.search(newValue)
+                    isLoading = false
                     deleteAllCharactersFromSwiftData()
                     saveCharactersToSwiftData()
                 }

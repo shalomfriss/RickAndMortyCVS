@@ -17,6 +17,9 @@ struct RickAndMortyDetailView: View {
                     Text(character.name)
                         .font(.title3)
                     KFImage(URL(string: character.image)!)
+                        .placeholder {
+                            ProgressView() // Show a progress indicator while loading
+                        }
                     Text(character.species)
                     Text(character.status)
                     Text(character.origin.name)
