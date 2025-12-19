@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol BackgroundActorProtocol: Actor {}
 
@@ -18,6 +19,12 @@ protocol CharacterRepositoryProtocol {
     func searchCharacters(name: String) async throws -> [CharacterModel]
 }
 
+enum NetworkError: Error {
+    case invalidURL
+    case invalidResponse(statusCode: Int)
+    case decodingFailed
+}
+
 @BackgroundActor
 final class CharacterRepository: CharacterRepositoryProtocol {
     func searchCharacters(name: String) async throws -> [CharacterModel] {
@@ -25,10 +32,17 @@ final class CharacterRepository: CharacterRepositoryProtocol {
         let urlString = "https://rickandmortyapi.com/api/character/?name=\(encodedName)"
 
         guard let url = URL(string: urlString) else {
-            throw URLError(.badURL)
+            throw NetworkError.invalidURL
         }
 
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
+            Logger.network.error("Bad status code \(statusCode)")
+            throw NetworkError.invalidResponse(statusCode: statusCode)
+        }
+        
         do {
             let response = try JSONDecoder().decode(CharactersDTO.self, from: data)
 
@@ -45,8 +59,8 @@ final class CharacterRepository: CharacterRepositoryProtocol {
             }
             return characters
         } catch {
-            print(error)
-            return [CharacterModel]()
+            Logger.network.error("Decoding failed")
+            throw NetworkError.decodingFailed
         }
     }
 

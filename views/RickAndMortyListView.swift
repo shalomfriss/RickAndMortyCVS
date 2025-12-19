@@ -56,7 +56,13 @@ struct RickAndMortyListView: View {
                 if searchText.isEmpty { return }
                 Task {
                     isLoading = true
-                    try await viewModel.search(newValue)
+                    do {
+                        try await viewModel.search(newValue)
+                    } catch {
+                        Logger.network.error("Failed to search for characters")
+                        // Handle error in UI
+                    }
+
                     isLoading = false
                     deleteAllCharactersFromSwiftData()
                     saveCharactersToSwiftData()
