@@ -20,7 +20,6 @@ protocol CharacterRepositoryProtocol {
 
 @BackgroundActor
 final class CharacterRepository: CharacterRepositoryProtocol {
-    var characters: [CharacterModel] = []
     func searchCharacters(name: String) async throws -> [CharacterModel] {
         let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? name
         let urlString = "https://rickandmortyapi.com/api/character/?name=\(encodedName)"
