@@ -38,6 +38,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		63256C1B2EF5084700D52A3F /* utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = utilities;
+			sourceTree = "<group>";
+		};
 		639D18DC2EF4CA270074FC1C /* RickAndMortyTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = RickAndMortyTests;
@@ -56,11 +61,6 @@
 		639D18FB2EF4CE9E0074FC1C /* models */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = models;
-			sourceTree = "<group>";
-		};
-		639D18FC2EF4CEF10074FC1C /* general */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = general;
 			sourceTree = "<group>";
 		};
 		639D18FD2EF4CF050074FC1C /* resources */ = {
@@ -109,9 +109,9 @@
 		639D18C12EF4CA260074FC1C = {
 			isa = PBXGroup;
 			children = (
+				63256C1B2EF5084700D52A3F /* utilities */,
 				639D19042EF4D29A0074FC1C /* NOTES.txt */,
 				639D18CD2EF4CA260074FC1C /* RickAndMortyApp.swift */,
-				639D18FC2EF4CEF10074FC1C /* general */,
 				639D18FB2EF4CE9E0074FC1C /* models */,
 				639D19092EF4D9300074FC1C /* network */,
 				639D18FD2EF4CF050074FC1C /* resources */,
@@ -149,9 +149,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				63256C1B2EF5084700D52A3F /* utilities */,
 				639D18FA2EF4CE990074FC1C /* views */,
 				639D18FB2EF4CE9E0074FC1C /* models */,
-				639D18FC2EF4CEF10074FC1C /* general */,
 				639D18FD2EF4CF050074FC1C /* resources */,
 				639D19012EF4CFF80074FC1C /* viewmodels */,
 				639D19092EF4D9300074FC1C /* network */,
